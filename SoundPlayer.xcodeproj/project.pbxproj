@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		272F69B01F55A11900A43200 /* AudioEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F69AF1F55A11900A43200 /* AudioEngine.m */; };
+		272F69B31F55CBF900A43200 /* Jiannis-S-Bahn.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 272F69B11F55CB9400A43200 /* Jiannis-S-Bahn.m4a */; };
 		27F0589F1F55850300C671C4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F0589E1F55850300C671C4 /* main.m */; };
 		27F058A21F55850300C671C4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F058A11F55850300C671C4 /* AppDelegate.m */; };
 		27F058A51F55850300C671C4 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F058A41F55850300C671C4 /* ViewController.m */; };
@@ -16,6 +18,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		272F69AE1F55A11900A43200 /* AudioEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioEngine.h; sourceTree = "<group>"; };
+		272F69AF1F55A11900A43200 /* AudioEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AudioEngine.m; sourceTree = "<group>"; };
+		272F69B11F55CB9400A43200 /* Jiannis-S-Bahn.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Jiannis-S-Bahn.m4a"; sourceTree = "<group>"; };
 		27F0589A1F55850300C671C4 /* SoundPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SoundPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		27F0589E1F55850300C671C4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		27F058A01F55850300C671C4 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -39,6 +44,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		272F69B41F55CF5000A43200 /* assert */ = {
+			isa = PBXGroup;
+			children = (
+				272F69B11F55CB9400A43200 /* Jiannis-S-Bahn.m4a */,
+			);
+			name = assert;
+			sourceTree = "<group>";
+		};
 		27F058911F55850300C671C4 = {
 			isa = PBXGroup;
 			children = (
@@ -58,6 +71,9 @@
 		27F0589C1F55850300C671C4 /* SoundPlayer */ = {
 			isa = PBXGroup;
 			children = (
+				272F69B41F55CF5000A43200 /* assert */,
+				272F69AE1F55A11900A43200 /* AudioEngine.h */,
+				272F69AF1F55A11900A43200 /* AudioEngine.m */,
 				27F058A01F55850300C671C4 /* AppDelegate.h */,
 				27F058A11F55850300C671C4 /* AppDelegate.m */,
 				27F058A31F55850300C671C4 /* ViewController.h */,
@@ -138,6 +154,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				272F69B31F55CBF900A43200 /* Jiannis-S-Bahn.m4a in Resources */,
 				27F058AD1F55850300C671C4 /* LaunchScreen.storyboard in Resources */,
 				27F058AA1F55850300C671C4 /* Assets.xcassets in Resources */,
 				27F058A81F55850300C671C4 /* Main.storyboard in Resources */,
@@ -151,6 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				272F69B01F55A11900A43200 /* AudioEngine.m in Sources */,
 				27F058A51F55850300C671C4 /* ViewController.m in Sources */,
 				27F058A21F55850300C671C4 /* AppDelegate.m in Sources */,
 				27F0589F1F55850300C671C4 /* main.m in Sources */,
@@ -273,11 +291,14 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_ACTIVITY_MODE = "";
+				"DEBUG_ACTIVITY_MODE[sdk=iphonesimulator*]" = disable;
 				DEVELOPMENT_TEAM = 5PK9D845XM;
 				INFOPLIST_FILE = SoundPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.holosbase.SoundPlayer;
+				PRODUCT_BUNDLE_IDENTIFIER = de.apiron.SoundPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -285,11 +306,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEBUG_ACTIVITY_MODE = "";
 				DEVELOPMENT_TEAM = 5PK9D845XM;
 				INFOPLIST_FILE = SoundPlayer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.holosbase.SoundPlayer;
+				PRODUCT_BUNDLE_IDENTIFIER = de.apiron.SoundPlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -312,6 +335,7 @@
 				27F058B31F55850300C671C4 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
