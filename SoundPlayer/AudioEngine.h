@@ -8,14 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
+@protocol AudioEngineDelegate <NSObject>
+
+@optional
+- (void)engineWasInterrupted;
+@end
+
+
 @interface AudioEngine : NSObject
 
 @property (nonatomic, assign, readonly) BOOL isPlaying;
+@property (nonatomic, weak) id<AudioEngineDelegate> delegate;
 
 - (void)startPlayer;
 - (void)stopPlayer;
 
-- (void)updatePitch:(float)pitch;
-- (void)updateRate:(float)newRate;
+- (void)updatePitch:(float)pitch;   // Range:     -2400 -> 2400     Default:    1.0
+- (void)updateRate:(float)newRate;  // Range:     1/32  -> 32.0     Default:    1.0
+
 
 @end

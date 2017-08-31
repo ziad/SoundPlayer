@@ -12,7 +12,7 @@
 static const NSUInteger     kNumberOfCircles  = 8;
 static const CGFloat        kCircleRadius     = 60.0f;
 
-@interface ViewController ()
+@interface ViewController () <AudioEngineDelegate>
 
 @property (nonatomic, strong) NSArray *circles;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
@@ -65,6 +65,7 @@ static const CGFloat        kCircleRadius     = 60.0f;
     
     [self loadCircle];
     _audioEngine = [[AudioEngine alloc] init];
+    _audioEngine.delegate = self;
     
 }
 
@@ -117,6 +118,31 @@ static const CGFloat        kCircleRadius     = 60.0f;
     }
 }
 
+- (void)hideCircle {
+    
+    CGPoint center = CGPointMake(CGRectGetWidth(self.notenView.bounds) / 2, CGRectGetHeight(self.notenView.bounds) / 2);
+    float delay = 0;
+    
+    NSUInteger count = [_circles count];
+    do {
+        count--;
+        UIView *circle = _circles[count];
+        
+        [UIView animateWithDuration:0.5 delay:delay options:0 animations:^{
+            
+            circle.center = center;
+            circle.alpha = 0;
+            circle.transform = CGAffineTransformMakeScale(0.5, 0.5);
+            
+        } completion:nil];
+        delay += 0.1;
+        
+        
+    } while (count > 0);
+    
+}
+
+
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -130,6 +156,12 @@ static const CGFloat        kCircleRadius     = 60.0f;
         [self showCircle];
         
     }];
+}
+
+#pragma mark <AudioEngineDelegate>
+
+- (void)engineWasInterrupted {
+    [_playButton setTitle:@"Play" forState:UIControlStateNormal];
 }
 
 

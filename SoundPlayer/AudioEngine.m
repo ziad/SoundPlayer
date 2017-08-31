@@ -11,6 +11,7 @@
 @import AVFoundation;
 
 @interface AudioEngine () {
+    
     AVAudioEngine           *engine;
     AVAudioPlayerNode       *player;
     AVAudioPCMBuffer        *audioBuffer; // audio data buffer for the player
@@ -31,7 +32,6 @@
     return self;
 }
 
-#pragma mark -
 #pragma mark setup audio
 
 - (void)setupAudioSession {
@@ -88,8 +88,8 @@
     player = [[AVAudioPlayerNode alloc] init];
     
     timePitch = [[AVAudioUnitTimePitch alloc] init];
-    timePitch.pitch = 1.0f;    // Range:     -2400 -> 2400     Default:    1.0
-    timePitch.rate = 1.0f;     // Range:     1/32  -> 32.0     Default:    1.0
+    timePitch.pitch = 1.0f;
+    timePitch.rate = 1.0f;
     
     // 3. create engine
     engine = [[AVAudioEngine alloc] init];
@@ -111,10 +111,10 @@
         NSError *error;
         BOOL success = [engine startAndReturnError:&error];
         NSAssert(success, @"start engine failed, %@", [error localizedDescription]);
-        NSLog(@"Audio Engine Started");
     }
 }
 
+#pragma mark -
 #pragma mark controll
 
 - (void)updatePitch:(float)pitch {
@@ -167,14 +167,64 @@
 
 - (void)handleInterruption:(NSNotification *)notification {
     
+    UInt8 type = [[notification.userInfo valueForKey:AVAudioSessionInterruptionTypeKey] intValue];
+    
+    if (type == AVAudioSessionInterruptionTypeBegan) {
+        
+        [self stopPlayer];
+        // tell the delegate to update UI
+        if ([self.delegate respondsToSelector:@selector(engineWasInterrupted)]) {
+            [self.delegate engineWasInterrupted];
+        }
+        
+    } else if (type == AVAudioSessionInterruptionTypeEnded) {
+        
+        NSError *error;
+        BOOL success = [[AVAudioSession sharedInstance] setActive:YES error:&error];
+        if (!success)
+        NSLog(@"AVAudioSession set active failed with error: %@", [error localizedDescription]);
+    }
 }
 
 - (void)handleRouteChange:(NSNotification *)notification {
     
+    UInt8 reason = [[notification.userInfo valueForKey:AVAudioSessionRouteChangeReasonKey] intValue];
+    AVAudioSessionRouteDescription *previousRoute = [notification.userInfo valueForKey:AVAudioSessionRouteChangePreviousRouteKey];
+    
+    NSLog(@"Route change:");
+    switch (reason) {
+        case AVAudioSessionRouteChangeReasonNewDeviceAvailable:
+        NSLog(@"NewDeviceAvailable");
+        break;
+        case AVAudioSessionRouteChangeReasonOldDeviceUnavailable:
+        NSLog(@"OldDeviceUnavailable");
+        break;
+        case AVAudioSessionRouteChangeReasonCategoryChange:
+        NSLog(@"CategoryChange");
+        NSLog(@"New Category: %@", [[AVAudioSession sharedInstance] category]);
+        break;
+        case AVAudioSessionRouteChangeReasonOverride:
+        NSLog(@"Override");
+        break;
+        case AVAudioSessionRouteChangeReasonWakeFromSleep:
+        NSLog(@"WakeFromSleep");
+        break;
+        case AVAudioSessionRouteChangeReasonNoSuitableRouteForCategory:
+        NSLog(@"NoSuitableRouteForCategory");
+        break;
+        default:
+        NSLog(@"Unknown");
+    }
+    
+    NSLog(@"Previous route: %@", previousRoute);
+    
+
 }
 
 - (void)handleMediaServicesReset:(NSNotification *)notification {
-    
+    NSLog(@"Media services have been reset! TODO: Re-wiring connections");
+    [self setupAudioSession];
+    [self setupEngine];
 }
 
 @end
